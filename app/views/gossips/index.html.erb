@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <title>Créer un potin</title>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+
+  <header>
+    <div class="menu">
+
+    <%= link_to "Home", gossips_path, class: "lien" %>
+    <%= link_to "Contact", static_contact_contact_path, class: "lien" %>
+    <%=  link_to "Team", static_team_team_path, class: "lien" %>
+      <a class="btnnew" href="/gossips/new">
+        New gossip
+        <%= image_tag "plus.png", class: "plusimg", alt: "Plus" %>
+      </a>
+
+
+
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="profilsection">
+     <div class="profil">
+      <%= image_tag "thp.png", class: "bannprofil", alt: "Plus" %>
+      <div class="infoprofil">
+        <div class="nbfollower">
+          <p class="nb">1984</p>
+          <p class="name">Followers</p>
+        </div>
+        <%= image_tag "utilisateur.png", class: "profilimg", alt: "Plus" %>
+         <div class="nbfollowing">
+          <p class="nb">1298</p>
+          <p class="name">Following</p>
+        </div>
+      </div>
+      <p class="username"><%= current_user.last_name %></p>
+      <p class="lienuser">@<%= current_user.last_name %><%= current_user.first_name %></p>
+      <p class="presentationuser"><%= current_user.description %></p>
+      <div class="trait"></div>
+
+      <%= form_with(url: session_path(session[:user_id]), method: :delete, local: true) do %>
+      <%= submit_tag "Se déconnecter", class: "btnvisit", data: { confirm: 'Êtes-vous sûr de vouloir vous déconnecter ?' } %>
+      <% end %>
+      
+     </div>
+    <p class="tagtitle">Tag :</p>
+
+<% @tags.each_slice(3) do |tag_group| %> <!-- Divise les tags en groupes de 3 -->
+  <div class="tag-row">
+    <% tag_group.each do |tag| %>
+      <span class="tag-item"><%= tag.title %></span>
+    <% end %>
+  </div>
+<% end %>
+
+    </div>
+
+    <div class="gossipsection">
+
+      <div class="userlist">
+      <% @users = User.joins(:gossips).distinct %>
+      <% @users.each do |user| %>
+        <div class="profilbd">
+           <% if user.first_name == "anonymous" %>
+        <%= image_tag "utilisateur.png", class: "userbdimg", alt: "Anonymous" %>
+      <% else %>
+        <%= image_tag "utilisateur.png", class: "userbdimg", alt: "User" %>
+      <% end %>
+        <p class="userbd"><%= user.first_name %></p>
+        </div>
+      <% end %>
+      </div>
+
+      <div class="formaccueil">
+      
+<form action="<%= gossips_path %>" method="POST">
+  <div class="headerform">
+ <%= image_tag "utilisateur.png", class: "profilimgform", alt: "Plus" %>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <div class ="inputdiv">
+  <input class="titreinput" type="text" name="gossip_title" placeholder="Entrez un titre">
+ <textarea class="textinput" name="gossip_content" placeholder="Entrez votre gossip ici"></textarea>
+<br>
+  </div>
+   </div>
+  <p class="margin"><input class="btnform" type="submit" value="Envoyer"></p>
+</form>
+      </div>
+
+      <div class="divderniers">
+        <div class="headerderniers">
+         <%= image_tag "utilisateur.png", class: "profilimgform", alt: "Plus" %>
+         <div class="infouserdernier">
+          <p class="lienprofilderniers">@FlorianTribout <%= image_tag "verifier.png", class: "verif", alt: "Plus" %></p>
+          <div class="namederniers">Florian Tribout<p class="time"></p><p class="infotime">1 hr ago</p></div>
+          </div>
+          
+        </div>
+        <p class="contenuderniers">🎉 J'ai commencé ma formation chez THP et je suis déjà fan du code ! 🚀💻 Hâte d'apprendre et de créer des choses incroyables !</p>
+        <%= image_tag "thp.png", class: "postthp", alt: "Plus" %>
+         <div class="commdiv">
+
+         <span class="align"> <%= image_tag "commentaire.png", class: "comimg", alt: "com" %> 35</span>
+         </div>
+         <div class="trait"></div>
+        <input class="comminput" type="text" placeholder="Entrez un commentaire">
+      </div>
+     
+    </div>
+
+   <div class="recentsection">
+  <div class="recentdiv">
+    <p class="titlerecent">Recent Gossips</p>
+
+    <div class="gossip-container">
+      <% @gossip.reverse.each  do |gossip| %>
+        <div class="gossiphome">
+          <div class="headergossip">
+            <div class="imgusertext">
+             
+        <%= image_tag "utilisateur.png", class: "userecent", alt: "User" %>
+
+              <p class="infogossip">@<%= gossip.user.last_name %></p>
+            </div>
+            <p class="infogossip">#<%= gossip.id %> </p>
+            </div>
+
+
+
+
+
+          <p class="textgossip"><%= gossip.content %></p>
+          
+          
+         
+
+<div class="likecomm">
+<% if current_user %>
+  <div class="like">
+    <% like = gossip.likes.find_by(user: current_user) %>
+    <% if like %>
+      <%= form_with(url: gossip_like_path(gossip, like), method: :delete, local: true, id: "unlike-form-#{like.id}") do %>
+        <div>
+          <%= link_to image_tag("coeurrouge.png", alt: "Unlike", class: "coeur"), "#", 
+            onclick: "event.preventDefault(); document.getElementById('unlike-form-#{like.id}').submit();" %>
+            
+        </div>
+      <% end %>
+    <% else %>
+      <%= form_with(url: gossip_likes_path(gossip), method: :post, local: true, id: "like-form-#{gossip.id}") do %>
+        <div>
+          <%= link_to image_tag("coeurgris.png", alt: "Like", class: "coeur"), "#", 
+            onclick: "event.preventDefault(); document.getElementById('like-form-#{gossip.id}').submit();" %>
+        </div>
+      <% end %>
+    <% end %>
+    <p><%= gossip.likes.count %></p>
+  </div>
+<% end %>
+ <%= image_tag "commentaire.png", class: "comimgindex", alt: "Plus" %>
+     <p><%= gossip.comments.count %> </p>
+     <%= link_to "Voir", "/gossips/#{gossip.id}", class: "btn" %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

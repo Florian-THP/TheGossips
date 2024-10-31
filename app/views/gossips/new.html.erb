@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Créer un potin</title>
+    <%= stylesheet_link_tag 'new', media: 'all', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+
+  <header>
+    <div class="menu">
+
+    <%= link_to "Home", gossips_path, class: "lien" %>
+    <%= link_to "Contact", static_contact_contact_path, class: "lien" %>
+    <%=  link_to "Team", static_team_team_path, class: "lien" %>
+      <a class="btnnew" href="/gossips/new">
+        New gossip
+        <%= image_tag "plus.png", class: "plusimg", alt: "Plus" %>
+      </a>
+    </div>
+  </header>
+
+<h1>Creer un Potin</h1>
+
+<form action="<%= gossips_path %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="text" name="gossip_title" placeholder="Entrez un titre">
+  <input type="text" name="gossip_content" placeholder="Entrez votre gossip ici">
+  <input type="submit" value="Valider">
+</form>
+
+</body>
+</html>

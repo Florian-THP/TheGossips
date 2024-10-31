@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <%= stylesheet_link_tag 'newuser', media: 'all', 'data-turbolinks-track': 'reload' %>
+   
+   </head>
+  <body>
+
+  <header>
+<div class="container">
+    <div class="gridleft">
+      <%= image_tag "log.png", class: "logimg", alt: "Plus" %>
+      <h3>The Gossips</h3>
+    </div>
+
+    <div class="gridright">
+        <h1>Sign up</h1>
+
+
+<%= form_with model: @user, url: users_path, local: true do |form| %>
+  <div>
+    <%= form.label :first_name, class: "namein" %></br>
+    <div class="in">
+    <%= form.text_field :first_name, required: true, class: "inputlogin" %>
+  </div> 
+  </div>
+
+  <div>
+    <%= form.label :last_name, class: "namein" %></br>
+       <div class="in">
+    <%= form.text_field :last_name, required: true, class: "inputlogin" %>
+  </div>
+    </div>
+
+  <div>
+    <%= form.label :email, class: "namein" %></br>
+       <div class="in">
+    <%= form.email_field :email, required: true, class: "inputlogin" %>
+  </div>
+    </div>
+
+     <div>
+    <%= form.label :description, class: "namein" %></br>
+       <div class="in">
+    <%= form.text_field :description, required: true, class: "inputlogin" %>
+  </div>
+
+  <div>
+    <%= form.label :age, class: "namein" %></br>
+       <div class="in">
+    <%= form.number_field :age, required: true, class: "inputlogin" %> 
+  </div>
+    </div>
+ <%= form.collection_select :city_id, City.all, :id, :name, { prompt: 'Sélectionnez une ville' }, required: true, class: "drop" %>
+
+
+  <div>
+    <%= form.label :password, class: "namein" %></br>
+       <div class="in">
+    <%= form.password_field :password, required: true, class: "inputlogin" %>
+  </div>
+    </div>
+
+  <div>
+    <%= form.submit "Create", class: "btncologin" %>
+  </div>
+<% end %>
+
+
+
+
+
+
+
+<p class="nocompte">You have an account?<a class="linkcree" href="/sessions/new">Log in</a></p>
+
+
+
+</div>
+
+
+
+<script>
+  function filterCities() {
+    const input = document.getElementById('city_input');
+    const filter = input.value.toLowerCase();
+    const cityList = document.getElementById('city_list');
+    const options = cityList.getElementsByTagName('li');
+
+    for (let i = 0; i < options.length; i++) {
+      const cityName = options[i].textContent || options[i].innerText;
+      options[i].style.display = cityName.toLowerCase().includes(filter) ? "" : "none";
+    }
+  }
+
+  document.querySelectorAll('.city-option').forEach(item => {
+    item.addEventListener('click', function() {
+      document.getElementById('city_input').value = this.textContent;
+      document.getElementById('city_id').value = this.getAttribute('data-value');
+      document.getElementById('city_list').style.display = 'none'; // Cache la liste après sélection
+    });
+  });
+
+  document.getElementById('city_input').addEventListener('focus', function() {
+    document.getElementById('city_list').style.display = 'block'; // Affiche la liste quand le champ est focus
+  });
+
+  document.getElementById('city_input').addEventListener('blur', function() {
+    setTimeout(() => {
+      document.getElementById('city_list').style.display = 'none'; // Cache la liste après avoir quitté le champ
+    }, 200); // Délai pour s'assurer que le clic sur un élément de la liste soit pris en compte
+  });
+</script>
+
+
+</body>
+</html>

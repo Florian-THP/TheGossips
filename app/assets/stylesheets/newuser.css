@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+body {
+    font-family: "Space Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container {
+    display: flex;
+}
+
+.gridleft, .gridright {
+    width: 50%;
+}
+
+.gridleft {
+    border-radius: 20px;
+    background-color: #ffffff;
+    border: 1px solid #222222;
+    cursor: pointer;
+    box-shadow: 0px 10px 20px #000000;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+ 
+}
+
+.gridright {
+    cursor: pointer;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.namein {
+    color: grey;
+    letter-spacing: -1px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.in {
+    height: 40px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #171717;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.inputlogin {
+   background-color: transparent;
+   height: 40px;
+   width: 80%;
+   color: #FFFFFF;
+   font-size: 16px;
+   padding-left: 10px;
+   border: none;
+}
+
+.btncologin {
+    width: 300px;
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 15px;
+    background-color: #dfdfdf;
+    border: none;
+    font-size: 16px;
+    letter-spacing: -0.4px;
+    cursor: pointer;
+}
+
+.btncologin:active {
+    transform: scale(0.98);
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: -1px;
+}
+
+.logimg {
+    width: 100%;
+    margin-bottom: -170px;
+}
+
+
+h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-size: 110px;
+    letter-spacing: -13px;
+    font-style: normal;
+    background: linear-gradient(30deg, #111111, #111111,#111111, #909090,#111111, #7e7e7e, #111111, #111111, #111111);
+    -webkit-background-clip: text;
+    color: transparent;
+    line-height: 0.9;
+    align-items: center;
+    margin-bottom: 0;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.nocompte {
+    color: grey;
+    font-size: 14px;
+}
+
+.linkcree {
+    text-decoration: none;
+    color: #FFFFFF;
+    margin-left: 5px;
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    z-index: 1000;
+  }
+  
+  .drop {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 300px;
+    position: relative;
+    appearance: none;
+    cursor: pointer;
+    border: 1px solid #171717;
+    border-radius: 15px;
+  }
+  
+  .drop option {
+    background-color: black;
+    color: white;
+  }
+  

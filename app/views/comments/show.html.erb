@@ -1,0 +1,53 @@
+  <html>
+  <head>
+    <title>Créer un potin</title>
+    <%= stylesheet_link_tag 'gossip', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+   </head>
+  <body>
+
+  <header>
+    <div class="menu">
+
+    <%= link_to "Home", gossips_path, class: "lien" %>
+    <a class="lien">Gossip</a>
+    <%= link_to "Contact", static_contact_contact_path, class: "lien" %>
+    <%=  link_to "Team", static_team_team_path, class: "lien" %>
+      <a class="btnnew" href="/gossips/new">
+        New gossip
+        <%= image_tag "plus.png", class: "plusimg", alt: "Plus" %>
+      </a>
+
+    </div>
+  </header>
+
+
+
+
+<%= form_with(model: [@gossip, @comment], local: true) do |form| %>
+  <div>
+    <%= form.label :content, "Modifier le commentaire :" %></br>
+    <%= form.text_area :content, value: @comment.content, placeholder: "Entrez votre commentaire" %>
+  </div>
+  <div>
+    <%= form.submit "Mettre à jour" %>
+  </div>
+<% end %>
+
+
+
+<%= form_with(url: gossip_comment_path(@gossip, @comment), method: :delete, local: true, id: "delete-form-#{@comment.id}") do %>
+  <div>
+    <%= link_to "Supprimer", "#", class: "btn", onclick: "event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) { document.getElementById('delete-form-#{@comment.id}').submit(); }" %>
+  </div>
+<% end %>
+
+  
+
+
+
+</body>
+</html>
+
+
+ 
